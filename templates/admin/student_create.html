@@ -1,0 +1,153 @@
+{% extends "admin/admin_base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-8">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">➕ Add New Student</h1>
+        <a href="{% url 'student_list' %}"
+           class="text-sm bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-lg">
+            ⬅ Back to List
+        </a>
+    </div>
+
+    <!-- Form Card -->
+    <div class="bg-white rounded-2xl shadow-lg p-6">
+        <form method="post" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+
+            <!-- Global Errors -->
+            {% if form.non_field_errors %}
+            <div class="bg-red-50 border border-red-300 text-red-700 p-4 rounded-lg">
+                {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+
+            <!-- Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Student Name -->
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Student Name</label>
+                    {{ form.student_name }}
+                    {% if form.student_name.errors %}
+                        <p class="text-red-500 text-sm mt-1">
+                            {{ form.student_name.errors.0 }}
+                        </p>
+                    {% endif %}
+                </div>
+
+                <!-- Father Name -->
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Father Name</label>
+                    {{ form.father_name }}
+                </div>
+
+                <!-- Mother Name -->
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Mother Name</label>
+                    {{ form.mother_name }}
+                </div>
+
+                <!-- ✅ Class -->
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Class</label>
+                    {{ form.student_class }}
+                    {% if form.student_class.errors %}
+                        <p class="text-red-500 text-sm mt-1">
+                            {{ form.student_class.errors.0 }}
+                        </p>
+                    {% endif %}
+                </div>
+
+                <!-- ✅ Section -->
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Section</label>
+                    {{ form.section }}
+                    {% if form.section.errors %}
+                        <p class="text-red-500 text-sm mt-1">
+                            {{ form.section.errors.0 }}
+                        </p>
+                    {% endif %}
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Contact Number</label>
+                    {{ form.contact_number }}
+                </div>
+
+                <!-- Email -->
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Email (optional)</label>
+                    {{ form.email }}
+                </div>
+
+                <!-- DOB -->
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Date of Birth</label>
+                    {{ form.dob }}
+                </div>
+
+                <!-- Village -->
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Village</label>
+                    {{ form.village }}
+                </div>
+
+                <!-- Post Office -->
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Post Office</label>
+                    {{ form.post_office }}
+                </div>
+
+                <!-- Police Station -->
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Police Station</label>
+                    {{ form.police_station }}
+                </div>
+
+                <!-- District -->
+                <div>
+                    <label class="block text-sm font-semibold mb-1">District</label>
+                    {{ form.district }}
+                </div>
+
+                <!-- State -->
+                <div>
+                    <label class="block text-sm font-semibold mb-1">State</label>
+                    {{ form.state }}
+                </div>
+
+                <!-- PIN -->
+                <div>
+                    <label class="block text-sm font-semibold mb-1">PIN Code</label>
+                    {{ form.pin }}
+                </div>
+
+                <!-- Photo -->
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-semibold mb-1">Student Photo</label>
+                    {{ form.photo }}
+                </div>
+
+            </div>
+
+            <!-- Submit -->
+            <div class="flex justify-end gap-4 pt-6 border-t">
+                <button type="reset"
+                        class="px-6 py-2 rounded-lg bg-gray-200 hover:bg-gray-300">
+                    Reset
+                </button>
+                <button type="submit"
+                        class="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700">
+                    Save Student
+                </button>
+            </div>
+        </form>
+    </div>
+
+</div>
+{% endblock %}

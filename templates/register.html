@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}
+Register
+{% endblock %}
+
+{% block content %}
+
+<section class="flex items-center justify-center min-h-[80vh] bg-gray-100 px-4">
+
+    <form method="POST"
+          class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
+
+        {% csrf_token %}
+
+        <!-- Messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="mb-4 p-3 text-center rounded-lg text-sm
+                    {% if message.tags == 'error' %}
+                        bg-red-100 text-red-700
+                    {% else %}
+                        bg-green-100 text-green-700
+                    {% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <h2 class="text-3xl font-bold mb-6 text-center text-gray-700">
+            Create Account
+        </h2>
+
+        <!-- Username -->
+        <div class="mb-4">
+            <input type="text"
+                   name="username"
+                   placeholder="Username"
+                   class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                   required>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-4">
+            <input type="email"
+                   name="email"
+                   placeholder="Email"
+                   class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                   required>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-4">
+            <input type="password"
+                   name="password1"
+                   placeholder="Password"
+                   class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                   required>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="mb-6">
+            <input type="password"
+                   name="password2"
+                   placeholder="Confirm Password"
+                   class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                   required>
+        </div>
+
+        <!-- Button -->
+        <button type="submit"
+                class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
+            Register
+        </button>
+
+        <!-- Login Link -->
+        <p class="mt-6 text-sm text-center text-gray-600">
+            Already have an account?
+            <a href="{% url 'login' %}"
+               class="text-blue-600 hover:underline font-medium">
+                Login
+            </a>
+        </p>
+
+    </form>
+
+</section>
+
+{% endblock %}

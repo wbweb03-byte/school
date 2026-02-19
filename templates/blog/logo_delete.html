@@ -1,0 +1,37 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+
+
+
+<div class="p-6 max-w-md mx-auto">
+
+    <div class="bg-white shadow rounded-2xl p-6 text-center">
+
+        <h2 class="text-xl font-semibold mb-4">
+            Delete Logo
+        </h2>
+
+        <p class="mb-6">
+            Are you sure you want to delete 
+            <strong>{{ logo.school_name }}</strong>?
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="flex justify-center gap-4">
+                <a href="{% url 'blog_dashboard' %}"
+                   class="bg-gray-400 text-white px-4 py-2 rounded-lg">
+                    Cancel
+                </a>
+                <button type="submit"
+                        class="bg-red-600 text-white px-4 py-2 rounded-lg">
+                    Delete
+                </button>
+            </div>
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

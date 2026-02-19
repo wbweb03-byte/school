@@ -1,0 +1,31 @@
+{% extends "admin/admin_base.html" %}
+{% block title %}Delete Teacher{% endblock %}
+
+{% block content %}
+<div class="max-w-lg mx-auto px-4 py-12">
+    <div class="bg-white rounded-2xl shadow p-6 text-center">
+
+        <h2 class="text-xl font-bold mb-4 text-red-600">
+            Delete Teacher
+        </h2>
+
+        <p class="mb-6 text-gray-600">
+            Are you sure you want to delete  
+            <strong>{{ teacher.teacher_name }}</strong>?
+        </p>
+
+        <form method="post" class="flex justify-center gap-4">
+            {% csrf_token %}
+            <a href="{% url 'teacher_list' %}"
+               class="px-6 py-2 bg-gray-200 rounded-lg">
+                Cancel
+            </a>
+            <button type="submit"
+                    class="px-6 py-2 bg-red-600 text-white rounded-lg">
+                Yes, Delete
+            </button>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

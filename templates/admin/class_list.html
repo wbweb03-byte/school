@@ -1,0 +1,40 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+
+<div class="max-w-4xl mx-auto">
+
+    <!-- Back Button -->
+    <div class="mb-4">
+        <a href="{% url 'student_list' %}" 
+           class="inline-flex items-center px-5 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 hover:shadow-lg active:scale-95 transition-all duration-200">
+           ← Back to Students
+        </a>
+    </div>
+
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold">Classes</h2>
+        <a href="{% url 'class_add' %}" 
+           class="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition duration-200">
+           ➕ Add Class
+        </a>
+    </div>
+
+    <table class="w-full bg-white shadow rounded-lg overflow-hidden">
+        {% for c in classes %}
+        <tr class="border-b hover:bg-gray-50 transition">
+            <td class="p-3">{{ c.name }}</td>
+            <td class="p-3 text-right space-x-3">
+                <a href="{% url 'class_update' c.id %}" class="text-blue-600 hover:underline">Edit</a>
+                <a href="{% url 'class_delete' c.id %}" class="text-red-600 hover:underline">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td class="p-4 text-center text-gray-500">No classes found</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+{% endblock %}

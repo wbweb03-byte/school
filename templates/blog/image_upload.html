@@ -1,0 +1,43 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+
+<div class="p-6 max-w-xl mx-auto">
+    <div class="bg-white shadow rounded-xl p-6">
+        <h2 class="text-xl font-semibold text-gray-700 mb-4">
+            {% if photo %} Update Image {% else %} Upload Image {% endif %}
+        </h2>
+
+        <form method="POST" enctype="multipart/form-data" class="space-y-4">
+            {% csrf_token %}
+
+            <div>
+                <label class="block mb-2 text-sm font-medium text-gray-700">
+                    Select Image
+                </label>
+                {{ form.image }}
+            </div>
+
+            {% if photo %}
+                <div>
+                    <p class="text-sm text-gray-600 mb-2">Current Image:</p>
+                    <img src="{{ photo.image.url }}" 
+                         class="w-40 h-40 object-cover rounded-lg shadow">
+                </div>
+            {% endif %}
+
+            <div class="flex justify-between">
+                <a href="{% url 'blog_dashboard' %}"
+                   class="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500">
+                    Cancel
+                </a>
+
+                <button type="submit"
+                        class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                    Save
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}Delete Student{% endblock %}
+
+{% block content %}
+<div class="max-w-lg mx-auto px-4 py-12">
+
+    <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
+
+        <!-- Warning Icon -->
+        <div class="mx-auto mb-4 w-14 h-14 rounded-full bg-red-100 flex items-center justify-center">
+            <span class="text-red-600 text-3xl">⚠</span>
+        </div>
+
+        <!-- Title -->
+        <h2 class="text-xl font-bold text-gray-800 mb-2">
+            Delete Student
+        </h2>
+
+        <!-- Message -->
+        <p class="text-gray-600 mb-6">
+            Are you sure you want to delete  
+            <span class="font-semibold text-gray-800">
+                {{ students.student_name }}
+            </span>?
+            <br>
+            This action cannot be undone.
+        </p>
+
+        <!-- Student Info -->
+        <div class="bg-gray-50 rounded-lg p-4 mb-6 text-left">
+            <p><strong>Class:</strong> {{ students.student_class }}</p>
+            <p><strong>Section:</strong> {{ students.section }}</p>
+            <p><strong>Contact:</strong> {{ students.contact_number }}</p>
+        </div>
+
+        <!-- Actions -->
+        <form method="post" class="flex justify-center gap-4">
+            {% csrf_token %}
+            <a href="{% url 'student_list' %}"
+               class="px-6 py-2 rounded-lg bg-gray-200 hover:bg-gray-300">
+                Cancel
+            </a>
+            <button type="submit"
+                    class="px-6 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700">
+                Yes, Delete
+            </button>
+        </form>
+
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends "admin/admin_base.html" %}
+{% block title %}Teacher Form{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-4 py-8">
+
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">
+        {{ form.instance.pk|yesno:"Update Teacher,Add New Teacher" }}
+    </h2>
+
+    <div class="bg-white rounded-2xl shadow p-6">
+        <form method="post" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {% csrf_token %}
+
+            <div>
+                <label class="font-semibold">Teacher Name</label>
+                {{ form.teacher_name }}
+            </div>
+
+            <div>
+                <label class="font-semibold">Contact Number</label>
+                {{ form.contact_number }}
+            </div>
+
+            <div>
+                <label class="font-semibold">Father Name</label>
+                {{ form.father_name }}
+            </div>
+
+            <div>
+                <label class="font-semibold">Mother Name</label>
+                {{ form.mother_name }}
+            </div>
+
+            <div>
+                <label class="font-semibold">Email</label>
+                {{ form.email }}
+            </div>
+
+            <div>
+                <label class="font-semibold">Date of Birth</label>
+                {{ form.dob }}
+            </div>
+
+            <div>
+                <label class="font-semibold">Village</label>
+                {{ form.village }}
+            </div>
+
+            <div>
+                <label class="font-semibold">Post Office</label>
+                {{ form.post_office }}
+            </div>
+
+            <div>
+                <label class="font-semibold">Police Station</label>
+                {{ form.police_station }}
+            </div>
+
+            <div>
+                <label class="font-semibold">District</label>
+                {{ form.district }}
+            </div>
+
+            <div>
+                <label class="font-semibold">State</label>
+                {{ form.state }}
+            </div>
+
+            <div>
+                <label class="font-semibold">PIN</label>
+                {{ form.pin }}
+            </div>
+
+            <div class="md:col-span-2">
+                <label class="font-semibold">Photo</label>
+                {{ form.photo }}
+            </div>
+
+            <div class="md:col-span-2 flex justify-end gap-4 pt-4 border-t">
+                <a href="{% url 'teacher_list' %}"
+                   class="px-6 py-2 bg-gray-200 rounded-lg">Cancel</a>
+                <button type="submit"
+                        class="px-6 py-2 bg-indigo-600 text-white rounded-lg">
+                    Save
+                </button>
+            </div>
+        </form>
+    </div>
+
+</div>
+{% endblock %}

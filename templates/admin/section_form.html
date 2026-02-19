@@ -1,0 +1,18 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+<div class="max-w-xl mx-auto bg-white p-6 shadow rounded">
+    <h2 class="text-xl font-bold mb-4">{{ title }}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded">
+            Save
+        </button>
+        <a href="{% url 'section_list' %}" 
+               class="px-5 py-2 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 active:scale-95 transition duration-200">
+               ← Back to section List
+            </a>
+    </form>
+</div>
+{% endblock %}

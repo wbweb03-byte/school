@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Assignment List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen py-8">
+
+<div class="max-w-6xl mx-auto px-4">
+
+    <!-- 🔹 TOP BAR -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-800">
+                Teacher Assignment List
+            </h1>
+            <p class="text-sm text-gray-600">
+                Class, Section, Subject & Teacher mapping
+            </p>
+        </div>
+
+        <div class="flex flex-wrap gap-2 mt-4 md:mt-0">
+            <a href="{% url 'dashboard' %}"
+               class="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-800">
+                ⬅ Dashboard
+            </a>
+
+            
+
+            <a href="{% url 'section_add' %}"
+               class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
+                ➕ Add term
+            </a>
+
+            
+
+            <a href="{% url 'teacher_assignment_list' %}"
+               class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+                ➕ Assign Teacher
+            </a>
+        </div>
+    </div>
+
+    <!-- 🔹 SUCCESS / ERROR MESSAGE -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="mb-4 p-3 rounded 
+                {% if message.tags == 'success' %}
+                    bg-green-100 text-green-700
+                {% else %}
+                    bg-red-100 text-red-700
+                {% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- 🔹 ASSIGNMENT TABLE -->
+    <div class="bg-white rounded-xl shadow overflow-x-auto">
+
+        {% if assignments %}
+        <table class="min-w-full border-collapse">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Class</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Section</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Subject</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Teacher</th>
+                    <th class="px-4 py-3 text-center text-sm font-semibold">Action</th>
+                </tr>
+            </thead>
+
+            <tbody class="divide-y">
+                {% for assign in assignments %}
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-3">{{ assign.student_class }}</td>
+                    <td class="px-4 py-3">{{ assign.section }}</td>
+                    <td class="px-4 py-3">{{ assign.subject }}</td>
+                    <td class="px-4 py-3">{{ assign.teacher }}</td>
+
+                    <td class="px-4 py-3 text-center space-x-2">
+                        <a href="#"
+                           class="text-blue-600 hover:underline">
+                            Edit
+                        </a>
+
+                        <a href="#"
+                           class="text-red-600 hover:underline"
+                           onclick="return confirm('Are you sure?')">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <!-- 🔹 EMPTY STATE -->
+        <div class="p-8 text-center text-gray-600">
+            <p class="text-lg font-semibold mb-2">
+                No teacher assignment found
+            </p>
+            <p class="mb-4">
+                Start by assigning a teacher to a subject.
+            </p>
+            <a href="{% url 'teacher_assignment_create' %}"
+               class="inline-block bg-green-600 text-white px-5 py-2 rounded hover:bg-green-700">
+                ➕ Assign Teacher
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>

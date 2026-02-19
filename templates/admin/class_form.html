@@ -1,0 +1,27 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+
+<div class="max-w-xl mx-auto bg-white p-6 shadow rounded">
+    <h2 class="text-xl font-bold mb-4">{{ title }}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <div class="mt-4 flex items-center gap-3">
+            <!-- Save Button -->
+            <button type="submit"
+                class="bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700 active:scale-95 transition duration-200">
+                Save
+            </button>
+
+            <!-- Back Button -->
+            <a href="{% url 'class_list' %}" 
+               class="px-5 py-2 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 active:scale-95 transition duration-200">
+               ← Back to class List
+            </a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

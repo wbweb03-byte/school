@@ -1,0 +1,54 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+
+<div class="p-6">
+
+    <div class="flex justify-between items-center mb-8">
+        <h2 class="text-3xl font-bold text-gray-800">School Logo</h2>
+
+        <a href="{% url 'logo_create' %}"
+           class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-2 rounded-xl shadow">
+            + Add Logo
+        </a>
+    </div>
+
+    {% if logos %}
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for logo in logos %}
+        <div class="bg-white rounded-2xl shadow p-6">
+
+            {% if logo.logo %}
+            <img src="{{ logo.logo.url }}"
+                 class="w-32 h-32 object-cover mx-auto mb-4 rounded-lg">
+            {% endif %}
+
+            <h3 class="text-lg font-semibold text-center">
+                {{ logo.school_name }}
+            </h3>
+            <p class="text-sm text-gray-500 text-center mb-4">
+                {{ logo.school_name_short }}
+            </p>
+
+            <div class="flex justify-center gap-4">
+                <a href="{% url 'logo_update' logo.id %}"
+                   class="bg-yellow-500 text-white px-4 py-2 rounded-lg">
+                    Edit
+                </a>
+                <a href="{% url 'logo_delete' logo.id %}"
+                   class="bg-red-600 text-white px-4 py-2 rounded-lg">
+                    Delete
+                </a>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <div class="bg-white p-8 rounded-xl shadow text-center">
+            No logo added yet.
+        </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}

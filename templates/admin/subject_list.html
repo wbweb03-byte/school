@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Subject List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 py-8">
+
+<div class="max-w-6xl mx-auto bg-white p-6 rounded-xl shadow">
+
+    <div class="flex justify-between mb-6">
+        <h1 class="text-2xl font-bold">Subjects</h1>
+        <a href="{% url 'subject-create' %}"
+           class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            ➕ Add Subject
+        </a>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="mb-4 p-3 rounded bg-green-100 text-green-700">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <table class="min-w-full border">
+        <thead class="bg-gray-100">
+            <tr>
+                <th class="p-3 text-left">Name</th>
+                <th class="p-3 text-center">Written</th>
+                <th class="p-3 text-center">Oral</th>
+                <th class="p-3 text-center">Pass (W/O)</th>
+                <th class="p-3 text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for subject in subjects %}
+            <tr class="border-t">
+                <td class="p-3">{{ subject.name }}</td>
+                <td class="p-3 text-center">{{ subject.written_full_marks }}</td>
+                <td class="p-3 text-center">{{ subject.oral_full_marks }}</td>
+                <td class="p-3 text-center">
+                    {{ subject.written_pass_marks }}/{{ subject.oral_pass_marks }}
+                </td>
+                <td class="p-3 text-center space-x-2">
+                    <a href="{% url 'subject-edit' subject.id %}" class="text-blue-600">Edit</a>
+                    <a href="{% url 'subject-delete' subject.id %}" class="text-red-600">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="p-6 text-center text-gray-500">
+                    No subjects found
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>

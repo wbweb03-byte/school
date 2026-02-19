@@ -1,0 +1,257 @@
+{% extends "admin/admin_base.html" %}
+{% block title %}Smart Mark Entry{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-8">
+
+    <!-- Top Controls -->
+    <div class="flex justify-between items-center mb-6">
+
+        <div class="flex gap-3">
+            <a href="{% url 'dashboard' %}"
+               class="px-5 py-2 bg-gray-100 text-indigo-600 border border-indigo-500 rounded-lg
+                      hover:bg-indigo-600 hover:text-white transition">
+                ← Back
+            </a>
+
+            <button onclick="bulkPrint()"
+                class="px-5 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700">
+                Bulk Print
+            </button>
+        </div>
+
+        <div class="flex gap-3">
+            <button onclick="addSubjectColumn()"
+                class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                + Add Subject
+            </button>
+
+            <button onclick="removeSubjectColumn()"
+                class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                - Remove
+            </button>
+
+            <button onclick="saveData()"
+                class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                💾 Save
+            </button>
+        </div>
+    </div>
+
+    <!-- Term Select -->
+    <div class="mb-4">
+        <label class="font-semibold mr-2">Select Term:</label>
+        <select id="termSelect" class="border px-3 py-2 rounded">
+            {% for term in terms %}
+            <option value="{{ term.id }}">{{ term }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="bg-white shadow-lg rounded-xl overflow-x-auto">
+        <table id="markTable" class="min-w-full text-sm text-center border">
+
+            <thead>
+                <tr class="bg-indigo-600 text-white">
+                    <th rowspan="2" class="border px-4 py-3">
+                        <input type="checkbox" onclick="toggleAll(this)">
+                    </th>
+                    <th rowspan="2" class="border px-4 py-3">Name</th>
+                    <th rowspan="2" class="border px-4 py-3">Total</th>
+                    <th rowspan="2" class="border px-4 py-3">Result</th>
+                    <th colspan="3" class="border px-4 py-3">Subject 1</th>
+                </tr>
+                <tr class="bg-indigo-500 text-white">
+                    <th class="border px-2 py-2">Subject</th>
+                    <th class="border px-2 py-2">Oral</th>
+                    <th class="border px-2 py-2">Written</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for student in students %}
+                <tr data-student="{{ student.id }}" class="student-row">
+
+                    <td class="border px-3 py-2">
+                        <input type="checkbox" class="row-check">
+                    </td>
+
+                    <td class="border px-3 py-2 font-medium">
+                        {{ student.student_name }}
+                    </td>
+
+                    <td class="border px-3 py-2 total-cell">0</td>
+                    <td class="border px-3 py-2 result-cell font-semibold">-</td>
+
+                    <td class="border px-2 py-2">
+                        <select class="subject-select border rounded px-1 py-1"
+                                onchange="checkDuplicate(this)">
+                            <option value="">Select</option>
+                            {% for subject in subjects %}
+                            <option value="{{ subject.id }}"
+                                    data-written-pass="{{ subject.written_pass_marks }}"
+                                    data-oral-pass="{{ subject.oral_pass_marks }}">
+                                {{ subject.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+
+                    <td class="border px-2 py-2">
+                        <input type="number" class="mark-input w-16 border rounded"
+                               oninput="calculateRow(this)">
+                    </td>
+
+                    <td class="border px-2 py-2">
+                        <input type="number" class="mark-input w-16 border rounded"
+                               oninput="calculateRow(this)">
+                    </td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+
+<script>
+let subjectCount = 1;
+const maxSubjects = 6;
+
+/* ---------------- DUPLICATE PREVENT ---------------- */
+function checkDuplicate(select) {
+    const row = select.closest("tr");
+    const selects = row.querySelectorAll(".subject-select");
+
+    let values = [];
+    selects.forEach(s => {
+        if (s.value !== "") {
+            if (values.includes(s.value)) {
+                alert("Duplicate subject not allowed!");
+                s.value = "";
+            } else {
+                values.push(s.value);
+            }
+        }
+    });
+}
+
+/* ---------------- AUTO TOTAL + REAL FAIL CHECK ---------------- */
+function calculateRow(input){
+
+    const row = input.closest("tr");
+    const selects = row.querySelectorAll(".subject-select");
+    const marks = row.querySelectorAll(".mark-input");
+
+    let total = 0;
+    let fail = false;
+
+    for (let i = 0; i < selects.length; i++) {
+
+        const select = selects[i];
+        const written = marks[i*2]?.value || 0;
+        const oral = marks[i*2+1]?.value || 0;
+
+        total += parseInt(written) + parseInt(oral);
+
+        if (select.value !== "") {
+            const writtenPass = parseInt(select.selectedOptions[0].dataset.writtenPass);
+            const oralPass = parseInt(select.selectedOptions[0].dataset.oralPass);
+
+            if (written < writtenPass || oral < oralPass) {
+                fail = true;
+            }
+        }
+    }
+
+    row.querySelector(".total-cell").innerText = total;
+
+    const resultCell = row.querySelector(".result-cell");
+
+    if (fail) {
+        resultCell.innerText = "Fail";
+        row.classList.add("bg-red-100");
+    } else {
+        resultCell.innerText = total > 0 ? "Pass" : "-";
+        row.classList.remove("bg-red-100");
+    }
+}
+
+/* ---------------- BULK SELECT ---------------- */
+function toggleAll(source){
+    document.querySelectorAll(".row-check")
+        .forEach(cb => cb.checked = source.checked);
+}
+
+/* ---------------- BULK PRINT ---------------- */
+function bulkPrint(){
+    const selected = [];
+    document.querySelectorAll(".row-check:checked").forEach(cb => {
+        const row = cb.closest("tr");
+        selected.push(row.dataset.student);
+    });
+
+    if (!selected.length){
+        alert("Select students first");
+        return;
+    }
+
+    const term = document.getElementById("termSelect").value;
+    window.open(`/marksheets/bulk-print/?term=${term}&ids=${selected.join(",")}`, "_blank");
+}
+
+/* ---------------- AJAX SAVE FULL MARKS ---------------- */
+function saveData(){
+
+    const term = document.getElementById("termSelect").value;
+    const rows = document.querySelectorAll(".student-row");
+
+    let payload = [];
+
+    rows.forEach(row => {
+
+        let student = row.dataset.student;
+        let subjects = [];
+
+        const selects = row.querySelectorAll(".subject-select");
+        const marks = row.querySelectorAll(".mark-input");
+
+        for (let i = 0; i < selects.length; i++) {
+
+            if (selects[i].value === "") continue;
+
+            subjects.push({
+                subject: selects[i].value,
+                written: marks[i*2]?.value || 0,
+                oral: marks[i*2+1]?.value || 0
+            });
+        }
+
+        if (subjects.length > 0) {
+            payload.push({
+                student: student,
+                term: term,
+                subjects: subjects
+            });
+        }
+    });
+
+    fetch("#", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": "{{ csrf_token }}"
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert("Marks saved successfully");
+        location.reload();
+    });
+}
+</script>
+
+{% endblock %}

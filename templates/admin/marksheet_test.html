@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Marksheet</title>
+
+    <!-- ✅ FIXED HERE -->
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+
+    <style>
+        @media print {
+            body {
+                background: white;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 py-8">
+
+<div class="max-w-5xl mx-auto bg-white p-6 border border-gray-300">
+
+    <!-- 🔹 SCHOOL HEADER -->
+    <div class="text-center mb-6">
+        <h1 class="text-2xl font-bold uppercase">
+            School Examination Marksheet
+        </h1>
+        <p class="text-sm text-gray-600">
+            Academic Result Statement
+        </p>
+    </div>
+
+    <!-- 🔹 STUDENT INFO -->
+    <div class="grid grid-cols-2 gap-4 mb-6 text-sm">
+        <p><strong>Name:</strong> {{ marksheet.student.student_name }}</p>
+        <p><strong>Class:</strong> {{ marksheet.student.student_class }}</p>
+
+        <p><strong>Father's Name:</strong> {{ marksheet.student.father_name }}</p>
+        <p><strong>Term:</strong> {{ marksheet.term }}</p>
+    </div>
+
+    <!-- 🔹 MARKS TABLE -->
+    <div class="overflow-x-auto">
+        <table class="min-w-full border border-gray-400 text-sm">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th rowspan="2" class="border px-3 py-2 text-left">
+                        Subject
+                    </th>
+                    <th colspan="2" class="border px-3 py-2 text-center">
+                        Marks Obtained
+                    </th>
+                    <th rowspan="2" class="border px-3 py-2 text-center">
+                        Total
+                    </th>
+                    <th rowspan="2" class="border px-3 py-2 text-center">
+                        Result
+                    </th>
+                </tr>
+                <tr>
+                    <th class="border px-3 py-2 text-center">
+                        Written
+                    </th>
+                    <th class="border px-3 py-2 text-center">
+                        Oral
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for mark in marksheet.marks.all %}
+                <tr>
+                    <td class="border px-3 py-2">
+                        {{ mark.subject.name }}
+                    </td>
+                    <td class="border px-3 py-2 text-center">
+                        {{ mark.written_marks }}
+                    </td>
+                    <td class="border px-3 py-2 text-center">
+                        {{ mark.oral_marks }}
+                    </td>
+                    <td class="border px-3 py-2 text-center">
+                        {{ mark.total_marks }}
+                    </td>
+                    <td class="border px-3 py-2 text-center">
+                        {{ mark.result }}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="border px-3 py-2 text-center text-gray-500">
+                        No marks available
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+            <!-- 🔹 TOTAL ROW -->
+            <tfoot class="bg-gray-100 font-semibold">
+                <tr>
+                    <td colspan="3" class="border px-3 py-2 text-right">
+                        Grand Total
+                    </td>
+                    <td class="border px-3 py-2 text-center">
+                        {{ marksheet.total_marks }}
+                    </td>
+                    <td class="border px-3 py-2 text-center">
+                        {{ marksheet.result }}
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <!-- 🔹 GRADE SECTION -->
+    <div class="mt-6 text-sm">
+        <p><strong>Grade:</strong> {{ marksheet.grade }}</p>
+    </div>
+
+    <!-- 🔹 SIGNATURES -->
+    <div class="grid grid-cols-2 gap-10 mt-12 text-sm">
+        <div class="text-center">
+            <p class="border-t pt-2">Class Teacher</p>
+        </div>
+        <div class="text-center">
+            <p class="border-t pt-2">Headmaster</p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

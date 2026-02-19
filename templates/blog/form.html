@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-100 min-h-screen flex items-center justify-center">
+
+<div class="w-full max-w-3xl bg-white p-8 rounded-xl shadow">
+
+    <h1 class="text-2xl font-bold mb-6 text-center">
+        {{ title }}
+    </h1>
+
+    <!-- Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="mb-4 p-3 rounded text-sm
+                {% if message.tags == 'error' %}
+                    bg-red-100 text-red-700
+                {% else %}
+                    bg-green-100 text-green-700
+                {% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data" class="space-y-5">
+        {% csrf_token %}
+
+        <!-- Title -->
+        <div>
+            <label class="block font-semibold mb-1">Title</label>
+            {{ form.title }}
+            {{ form.title.errors }}
+        </div>
+
+        <!-- Description -->
+        <div>
+            <label class="block font-semibold mb-1">Description</label>
+            {{ form.description }}
+            {{ form.description.errors }}
+        </div>
+
+        <!-- Image -->
+        <div>
+            <label class="block font-semibold mb-1">Image</label>
+            {{ form.image }}
+            {{ form.image.errors }}
+        </div>
+
+        <!-- Published -->
+        <div class="flex items-center gap-2">
+            {{ form.is_published }}
+            <label class="font-semibold">Publish now</label>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex justify-between items-center mt-6">
+            <a href="{% url 'blog_dashboard' %}"
+               class="text-gray-600 hover:underline">
+                ← Back
+            </a>
+
+            <button type="submit"
+                class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                Save
+            </button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

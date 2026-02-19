@@ -1,0 +1,77 @@
+<!-- blog/templates/blog/home.html -->
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student page</title>
+    <style>
+        body {
+            font-family: 'SolaimanLipi', Arial, sans-serif;
+            direction: ltr;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .bangla {
+            font-size: 1.2em;
+            line-height: 1.8;
+        }
+        .lesson {
+            background: #e8f4fc;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #3498db;
+        }
+        .practice {
+            background: #e8f8f0;
+            padding: 15px;
+            margin: 20px 0;
+            border: 1px dashed #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Student Details</h1>
+        
+        <div class="bangla">
+            <h2>স্বাগতম {{ name }}!</h2>
+            
+            
+            <div class="lesson">
+                <h3>টপিকস:</h3>
+                <ul>
+                    <li>Templates ডিরেক্টরি সেটআপ</li>
+                    <li>HTML ফাইল তৈরি</li>
+                    <li>Views থেকে ডেটা পাস</li>
+                    <li>Template Variables</li>
+                </ul>
+            </div>
+            
+            <div class="practice">
+                <h3>📝 প্র্যাকটিস সেকশন</h3>
+                <p><strong>student id:</strong> {{ student_id }}</p>
+                <p><strong>Department:</strong> {{ department }}</p>
+                {%for course in courses%}
+                <p><strong>টপিক:</strong> {{  course }}</p>
+                {%endfor%}
+                <p><strong>semester:</strong> {{ semester }}</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

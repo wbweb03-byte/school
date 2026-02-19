@@ -1,0 +1,29 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+
+ <div class="mb-4">
+        <a href="{% url 'student_list' %}" 
+           class="inline-flex items-center px-5 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 hover:shadow-lg active:scale-95 transition-all duration-200">
+           ← Back to Students
+        </a>
+    </div>
+<div class="max-w-5xl mx-auto">
+    <div class="flex justify-between mb-4">
+        <h2 class="text-xl font-bold">Sections</h2>
+        <a href="{% url 'section_add' %}" class="btn-primary">➕ Add Section</a>
+    </div>
+
+    <table class="w-full bg-white shadow rounded">
+        {% for s in sections %}
+        <tr class="border-b">
+            <td class="p-3">{{ s.student_class }}</td>
+            <td class="p-3">{{ s.name }}</td>
+            <td class="p-3 text-right">
+                <a href="{% url 'section_update' s.id %}" class="text-blue-600">Edit</a>
+                <a href="{% url 'section_delete' s.id %}" class="text-red-600">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

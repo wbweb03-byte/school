@@ -1,0 +1,126 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}Student Details{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-4 py-8">
+
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+        <h2 class="text-2xl font-bold text-gray-800">
+            Student Details
+        </h2>
+
+        <div class="flex gap-2">
+            <a href="{% url 'student_list' %}"
+               class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-lg">
+                ⬅ Back
+            </a>
+            <a href="{% url 'student_update' student.id %}"
+               class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg">
+                ✏ Edit
+            </a>
+        </div>
+    </div>
+
+    <!-- Card -->
+    <div class="bg-white rounded-2xl shadow-lg p-6">
+
+        <!-- Top section -->
+        <div class="flex flex-col md:flex-row gap-6 mb-6">
+
+            <!-- Photo -->
+            <div class="flex-shrink-0">
+                {% if student.photo %}
+                    <img src="{{ student.photo.url }}"
+                         class="w-40 h-40 rounded-xl object-cover border">
+                {% else %}
+                    <div class="w-40 h-40 rounded-xl bg-gray-200 flex items-center justify-center text-gray-500">
+                        No Photo
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Basic Info -->
+            <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <p class="text-sm text-gray-500">Student Name</p>
+                    <p class="font-semibold">{{ student.student_name }}</p>
+                </div>
+
+                <div>
+                    <p class="text-sm text-gray-500">Class</p>
+                    <p class="font-semibold">{{ student.student_class }}</p>
+                </div>
+
+                <div>
+                    <p class="text-sm text-gray-500">Section</p>
+                    <p class="font-semibold">{{ student.section }}</p>
+                </div>
+
+                <div>
+                    <p class="text-sm text-gray-500">Date of Birth</p>
+                    <p class="font-semibold">{{ student.dob }}</p>
+                </div>
+
+                <div>
+                    <p class="text-sm text-gray-500">Contact Number</p>
+                    <p class="font-semibold">{{ student.contact_number }}</p>
+                </div>
+
+                <div>
+                    <p class="text-sm text-gray-500">Email</p>
+                    <p class="font-semibold">
+                        {{ student.email|default:"—" }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Parents -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 border-t pt-6">
+            <div>
+                <p class="text-sm text-gray-500">Father Name</p>
+                <p class="font-semibold">{{ student.father_name }}</p>
+            </div>
+            <div>
+                <p class="text-sm text-gray-500">Mother Name</p>
+                <p class="font-semibold">{{ student.mother_name }}</p>
+            </div>
+        </div>
+
+        <!-- Address -->
+        <div class="border-t pt-6">
+            <h3 class="text-lg font-semibold mb-4 text-gray-700">Address</h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <div>
+                    <p class="text-sm text-gray-500">Village</p>
+                    <p class="font-medium">{{ student.village }}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Post Office</p>
+                    <p class="font-medium">{{ student.post_office }}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Police Station</p>
+                    <p class="font-medium">{{ student.police_station }}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">District</p>
+                    <p class="font-medium">{{ student.district }}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">State</p>
+                    <p class="font-medium">{{ student.state }}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">PIN Code</p>
+                    <p class="font-medium">{{ student.pin }}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

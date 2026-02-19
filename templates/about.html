@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}
+About Us
+{% endblock %}
+
+{% block content %}
+
+<!-- ================= PAGE HEADER ================= -->
+<section class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16 text-center">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4">
+        আমাদের সম্পর্কে
+    </h1>
+    <p class="max-w-2xl mx-auto text-blue-100 text-lg">
+        এই প্রোজেক্টে আমরা Django বাংলায় শিখব।
+    </p>
+</section>
+
+
+<!-- ================= ABOUT CONTENT ================= -->
+<section class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-6">
+
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold">আমাদের টিম</h2>
+            <p class="text-gray-500 mt-2">আমাদের দক্ষ ও অভিজ্ঞ সদস্যবৃন্দ</p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
+
+            {% for member in team %}
+            <div class="bg-slate-50 rounded-xl shadow p-6 text-center hover:shadow-xl transition duration-300">
+
+                <!-- Avatar Placeholder -->
+                <div class="w-20 h-20 mx-auto mb-4 bg-blue-600 text-white rounded-full flex items-center justify-center text-xl font-bold">
+                    {{ member.name|slice:":1" }}
+                </div>
+
+                <h3 class="text-lg font-semibold">
+                    {{ member.name }}
+                </h3>
+
+                <p class="text-sm text-gray-500">
+                    {{ member.role }}
+                </p>
+
+            </div>
+            {% empty %}
+            <p class="text-center text-gray-500 col-span-full">
+                কোনো সদস্য পাওয়া যায়নি।
+            </p>
+            {% endfor %}
+
+        </div>
+
+        <!-- Back Button -->
+        <div class="text-center mt-12">
+            <a href="/"
+               class="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+                ← হোম পেজে যান
+            </a>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

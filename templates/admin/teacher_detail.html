@@ -1,0 +1,60 @@
+{% extends "admin/admin_base.html" %}
+{% block title %}Teacher Details{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-8">
+
+    <div class="flex items-center justify-between mb-6">
+
+        <!-- Teacher Name -->
+        <h2 class="text-2xl font-bold text-gray-800">
+            {{ teacher.teacher_name }}
+        </h2>
+
+        <!-- Buttons Section -->
+        <div class="flex gap-3">
+
+            <!-- Back Button (Highlighted Style) -->
+            <a href="{% url 'teacher_list' %}"
+               class="inline-block px-5 py-2 bg-gray-100 text-indigo-600 font-medium rounded-lg border border-indigo-500 
+                      hover:bg-indigo-600 hover:text-white transition-all duration-200 shadow-sm">
+               ← Back to List
+            </a>
+
+            <!-- Edit Button -->
+            <a href="{% url 'teacher_update' teacher.id %}"
+               class="inline-block px-5 py-2 bg-indigo-600 text-white font-medium rounded-lg 
+                      hover:bg-indigo-700 transition-all duration-200 shadow-md">
+               Edit
+            </a>
+
+        </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow p-6">
+        <div class="flex gap-6 mb-6">
+            {% if teacher.photo %}
+                <img src="{{ teacher.photo.url }}"
+                     class="w-32 h-32 rounded-xl object-cover">
+            {% endif %}
+            <div>
+                <p><strong>Contact:</strong> {{ teacher.contact_number }}</p>
+                <p><strong>Email:</strong> {{ teacher.email|default:"—" }}</p>
+                <p><strong>DOB:</strong> {{ teacher.dob }}</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 border-t pt-4">
+            <p><strong>Father:</strong> {{ teacher.father_name }}</p>
+            <p><strong>Mother:</strong> {{ teacher.mother_name }}</p>
+            <p><strong>Village:</strong> {{ teacher.village }}</p>
+            <p><strong>Post Office:</strong> {{ teacher.post_office }}</p>
+            <p><strong>Police Station:</strong> {{ teacher.police_station }}</p>
+            <p><strong>District:</strong> {{ teacher.district }}</p>
+            <p><strong>State:</strong> {{ teacher.state }}</p>
+            <p><strong>PIN:</strong> {{ teacher.pin }}</p>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}
+Gallery | {{ school_name }}
+{% endblock %}
+
+{% block content %}
+
+<section class="py-20 bg-gray-50">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+        <!-- ================= HEADER ================= -->
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-800">
+                School Gallery
+            </h2>
+            <p class="text-gray-500 mt-4 text-lg">
+                Explore memorable moments from our school activities
+            </p>
+        </div>
+
+        <!-- ================= GALLERY GRID ================= -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+            {% for image in gallerys %}
+            <div class="relative group overflow-hidden rounded-2xl shadow-lg cursor-pointer"
+                 onclick="openModal('{{ image.image.url }}')">
+
+                <img src="{{ image.image.url }}"
+                     class="w-full h-56 object-cover group-hover:scale-110 transition duration-500">
+
+                <!-- Overlay -->
+                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                    <span class="text-white text-lg font-semibold">
+                        View
+                    </span>
+                </div>
+
+            </div>
+            {% empty %}
+            <div class="col-span-full text-center py-16 text-gray-400">
+                No images available in gallery.
+            </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= MODAL (Lightbox) ================= -->
+<div id="imageModal"
+     class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50">
+
+    <span onclick="closeModal()"
+          class="absolute top-6 right-8 text-white text-4xl cursor-pointer">
+        &times;
+    </span>
+
+    <img id="modalImage"
+         class="max-h-[85vh] max-w-[90vw] rounded-xl shadow-2xl">
+</div>
+
+
+<script>
+function openModal(imageUrl) {
+    document.getElementById("modalImage").src = imageUrl;
+    document.getElementById("imageModal").classList.remove("hidden");
+    document.getElementById("imageModal").classList.add("flex");
+}
+
+function closeModal() {
+    document.getElementById("imageModal").classList.add("hidden");
+}
+</script>
+
+{% endblock %}

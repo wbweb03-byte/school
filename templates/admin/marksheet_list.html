@@ -1,0 +1,100 @@
+{% extends "admin/admin_base.html" %}
+{% block title %}Marksheet List{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-8">
+
+    <!-- Top Section -->
+    <div class="flex justify-between items-center mb-6">
+
+        <h2 class="text-2xl font-bold text-gray-800">
+            All Marksheets
+        </h2>
+
+        <div class="flex gap-3">
+            <a href="{% url 'marksheet_list' %}"
+               class="px-5 py-2 bg-gray-100 text-indigo-600 border border-indigo-500 rounded-lg
+                      hover:bg-indigo-600 hover:text-white transition">
+                ← Back to Dashboard
+            </a>
+
+            <a href="{% url 'create_marksheet' %}"
+               class="px-5 py-2 bg-indigo-600 text-white rounded-lg shadow
+                      hover:bg-indigo-700 transition">
+                + Add Marksheet
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Table Section -->
+    <div class="bg-white shadow-lg rounded-xl overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="min-w-full text-sm text-center text-gray-700">
+
+                <thead class="bg-indigo-600 text-white uppercase text-xs tracking-wider">
+                    <tr>
+                        <th class="px-4 py-3">#</th>
+                        <th class="px-4 py-3">Student</th>
+                        <th class="px-4 py-3">Term</th>
+                        <th class="px-4 py-3">Total</th>
+                        <th class="px-4 py-3">Grade</th>
+                        <th class="px-4 py-3">Result</th>
+                        <th class="px-4 py-3">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody class="divide-y divide-gray-200">
+                    {% for sheet in sheets %}
+                    <tr class="hover:bg-gray-50 transition">
+
+                        <td class="px-4 py-3">{{ forloop.counter }}</td>
+                        <td class="px-4 py-3 font-medium">
+                            {{ sheet.student.student_name }}
+                        </td>
+                        <td class="px-4 py-3">{{ sheet.term }}</td>
+                        <td class="px-4 py-3">{{ sheet.total_marks }}</td>
+                        <td class="px-4 py-3">{{ sheet.grade }}</td>
+
+                        <td class="px-4 py-3">
+                            {% if sheet.result == "Pass" %}
+                                <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-700">
+                                    Pass
+                                </span>
+                            {% else %}
+                                <span class="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-700">
+                                    Fail
+                                </span>
+                            {% endif %}
+                        </td>
+
+                        <td class="px-4 py-3 space-x-2">
+
+                            <a href="{% url 'marksheet_detail' sheet.id %}"
+                               class="text-indigo-600 hover:underline font-medium">
+                                View
+                            </a>
+
+                            <a href="{% url 'marksheet_detail' sheet.id %}"
+                               class="text-yellow-600 hover:underline font-medium">
+                                Edit
+                            </a>
+
+                        </td>
+
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="py-6 text-gray-500">
+                            No Marksheet Found
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

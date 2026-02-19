@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Letter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+    <div class="bg-white max-w-md w-full shadow-lg rounded-lg p-6 text-center">
+
+        <!-- Icon -->
+        <div class="text-red-600 text-5xl mb-4">
+            ⚠️
+        </div>
+
+        <!-- Title -->
+        <h2 class="text-xl font-bold text-gray-800 mb-3">
+            Delete Letter
+        </h2>
+
+        <!-- Message -->
+        <p class="text-gray-600 mb-6">
+            Are you sure you want to delete  
+            <span class="font-semibold">“{{ letter.subjects }}”</span>?  
+            <br>
+            This action cannot be undone.
+        </p>
+
+        <!-- Form -->
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="flex justify-center gap-4">
+                <a href="{% url 'blog_dashboard'  %}"
+                   class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+                    Cancel
+                </a>
+
+                 <a href="{% url 'letter_delete' object.slug %}">
+                 <button type='submit'
+                        class="px-5 py-2 bg-red-600 text-white rounded hover:bg-red-700">
+                    Yes, Delete
+                 </button>
+                    </a>
+            </div>
+        </form>
+
+    </div>
+
+</body>
+</html>

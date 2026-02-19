@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Notice</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+    <div class="min-h-screen flex items-center justify-center px-4">
+
+        <!-- Delete Card -->
+        <div class="max-w-lg w-full bg-white rounded-xl shadow-lg p-8">
+
+            <!-- Warning Icon -->
+            <div class="flex justify-center mb-4">
+                <div class="w-14 h-14 flex items-center justify-center rounded-full bg-red-100 text-red-600 text-2xl">
+                    ⚠️
+                </div>
+            </div>
+
+            <!-- Title -->
+            <h1 class="text-2xl font-bold text-center text-gray-800">
+                Delete Notice
+            </h1>
+
+            <!-- Message -->
+            <p class="text-center text-gray-600 mt-3">
+                Are you sure you want to delete this notice?
+                <span class="block mt-2 font-semibold text-gray-800">
+                    “{{ notice.title }}”
+                </span>
+            </p>
+
+            <!-- Info -->
+            <div class="mt-5 text-sm text-gray-500 text-center">
+                This action <span class="text-red-600 font-semibold">cannot be undone</span>.
+            </div>
+
+            <!-- Buttons -->
+            <form method="POST" class="mt-8 flex gap-4 justify-center">
+                {% csrf_token %}
+
+                <a href="{% url 'blog_dashboard' %}"
+                   class="px-5 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100">
+                    Cancel
+                </a>
+
+                <button type="submit"
+                        class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+                    Yes, Delete
+                </button>
+            </form>
+
+        </div>
+    </div>
+
+</body>
+</html>

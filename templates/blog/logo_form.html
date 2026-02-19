@@ -1,0 +1,53 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+
+<div class="max-w-2xl mx-auto p-6">
+
+    <!-- Back Button -->
+    <div class="mb-4">
+        <a href="{% url 'blog_dashboard' %}" 
+           class="inline-flex items-center px-4 py-2 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 active:scale-95 transition-all duration-200">
+            ← Back
+        </a>
+    </div>
+
+    <div class="bg-white shadow-lg rounded-2xl p-8">
+
+        <h2 class="text-2xl font-bold mb-6">
+            {% if form.instance.pk %} Edit Logo {% else %} Add Logo {% endif %}
+        </h2>
+
+        <form method="POST" enctype="multipart/form-data" class="space-y-4">
+            {% csrf_token %}
+
+            <div>
+                {{ form.logo.label_tag }}
+                {{ form.logo }}
+            </div>
+
+            <div>
+                {{ form.school_name.label_tag }}
+                {{ form.school_name }}
+            </div>
+
+            <div>
+                {{ form.school_name_short.label_tag }}
+                {{ form.school_name_short }}
+            </div>
+
+            <div>
+                {{ form.slug.label_tag }}
+                {{ form.slug }}
+            </div>
+
+            <button type="submit"
+                    class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-xl transition duration-200">
+                Save
+            </button>
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

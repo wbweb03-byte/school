@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Admin Panel{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+<!-- ================= TOP NAVBAR ================= -->
+<header class="bg-gray-900 text-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+
+        <!-- Left: Logo / Title -->
+        <div class="flex items-center gap-4">
+            <a href="/admin-dashboard/"
+               class="text-lg font-bold tracking-wide hover:text-blue-400 transition">
+                Admin Dashboard
+            </a>
+        </div>
+
+        <!-- Right: Buttons -->
+        <div class="flex items-center gap-4 text-sm">
+
+            <!-- Back to Dashboard -->
+            <a href="{%url 'dashboard' %}"
+               class="bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                ← Dashboard
+            </a>
+
+            <!-- Logout -->
+            <a href="{% url 'logout' %}"
+               class="bg-red-600 px-4 py-2 rounded-lg hover:bg-red-700 transition">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+</header>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+<main class="flex-grow p-6 max-w-7xl mx-auto w-full">
+    {% block content %}
+    {% endblock %}
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+<footer class="bg-gray-900 text-gray-400 text-center py-4 text-sm">
+    © 2026 Admin Panel
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+<div class="max-w-md mx-auto bg-white p-6 shadow rounded text-center">
+    <h2 class="text-lg mb-4">Are you sure?</h2>
+    <form method="post">
+        {% csrf_token %}
+        <button class="bg-red-600 text-white px-4 py-2 rounded">Yes, Delete</button>
+        <a href=".." class="ml-3">Cancel</a>
+    </form>
+</div>
+{% endblock %}

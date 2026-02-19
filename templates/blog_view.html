@@ -1,0 +1,279 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}
+Content Management
+{% endblock %}
+
+{% block content %}
+
+<div class="max-w-7xl mx-auto px-6 py-10">
+
+    <!-- ================= PAGE HEADER ================= -->
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-800">
+                Content Management
+            </h1>
+            <p class="text-gray-500 mt-2 text-sm">
+                Manage Logo, Gallery, About, Letters & Notices
+            </p>
+        </div>
+
+        <div class="mt-6 lg:mt-0 flex flex-wrap gap-3">
+            <a href="{% url 'logo_create' %}"
+               class="px-4 py-2 bg-purple-600 text-white rounded-xl shadow hover:bg-purple-700 transition text-sm">
+                + Add Logo
+            </a>
+
+            <a href="{% url 'image_upload' %}"
+               class="px-4 py-2 bg-pink-600 text-white rounded-xl shadow hover:bg-pink-700 transition text-sm">
+                + Add Gallery
+            </a>
+
+            <a href="{% url 'about_add' %}"
+               class="px-4 py-2 bg-blue-600 text-white rounded-xl shadow hover:bg-blue-700 transition text-sm">
+                + Add About
+            </a>
+
+            <a href="{% url 'letter_add' %}"
+               class="px-4 py-2 bg-indigo-600 text-white rounded-xl shadow hover:bg-indigo-700 transition text-sm">
+                + Add Letter
+            </a>
+
+            <a href="{% url 'notice_add' %}"
+               class="px-4 py-2 bg-emerald-600 text-white rounded-xl shadow hover:bg-emerald-700 transition text-sm">
+                + Add Notice
+            </a>
+           <a href="{% url 'dashboard' %}"> <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 active:scale-95 transition duration-200">
+                ← Return
+                </button> </a>
+        </div>
+    </div>
+
+    <!-- ================= LOGO SECTION ================= -->
+    <section class="mb-16">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-semibold text-gray-700">
+                School Logo
+            </h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            {% for logo in logo_list %}
+            <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition p-6 text-center">
+
+                {% if logo.logo %}
+                <img src="{{ logo.logo.url }}"
+                     class="w-28 h-28 mx-auto object-cover rounded-lg mb-4">
+                {% endif %}
+
+                <h3 class="font-semibold text-gray-800">
+                    {{ logo.school_name }}
+                </h3>
+                <p class="text-sm text-gray-500 mb-4">
+                    {{ logo.school_name_short }}
+                </p>
+
+                <div class="flex justify-center gap-3 text-sm">
+                    <a href="{% url 'logo_update' logo.id %}"
+                       class="px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                        Edit
+                    </a>
+                    <a href="{% url 'logo_delete' logo.id %}"
+                       class="px-3 py-1 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+                        Delete
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="text-gray-400 col-span-full text-center py-10">
+                No Logo Added Yet.
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+
+    <!-- ================= GALLERY SECTION ================= -->
+    <section class="mb-16">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-semibold text-gray-700">
+                Gallery
+            </h2>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {% for img in gallery_list %}
+            <div class="relative group rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
+
+                <img src="{{ img.image.url }}"
+                     class="w-full h-40 object-cover group-hover:scale-105 transition duration-500">
+
+                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-3">
+
+                    <a href="{% url 'image_update' img.id %}"
+                       class="px-3 py-1 bg-blue-600 text-white rounded-lg text-sm">
+                        Edit
+                    </a>
+
+                    <a href="{% url 'image_delete' img.id %}"
+                       class="px-3 py-1 bg-red-600 text-white rounded-lg text-sm">
+                        Delete
+                    </a>
+
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-full text-center text-gray-400 py-10">
+                No Gallery Images Found.
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- ================= ABOUT SECTION ================= -->
+    <section class="mb-14">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-xl font-semibold text-gray-700">About Section</h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for about in about_list %}
+            <div class="bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition flex flex-col">
+
+                {% if about.image %}
+                <img src="{{ about.image.url }}"
+                     alt="{{ about.title }}"
+                     class="h-44 w-full object-cover rounded-t-xl">
+                {% endif %}
+
+                <div class="p-5 flex flex-col flex-grow">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">
+                        {{ about.title }}
+                    </h3>
+
+                    <p class="text-sm text-gray-600 flex-grow">
+                        {{ about.description|truncatechars:120 }}
+                    </p>
+
+                    <div class="mt-5 flex justify-between items-center text-xs text-gray-400">
+                        <span>{{ about.created_at|date:"d M Y" }}</span>
+
+                        <div class="flex gap-2">
+                            <a href="{% url 'about_detail' about.slug %}"
+                               class="px-3 py-1 bg-gray-100 rounded-md hover:bg-gray-200 transition">
+                                View
+                            </a>
+                            <a href="{% url 'about_update' about.slug %}"
+                               class="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                                Edit
+                            </a>
+                            <a href="{% url 'about_delete' about.slug %}"
+                               class="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition">
+                                Delete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-full text-center py-12 text-gray-400">
+                No About content available.
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- ================= LETTER SECTION ================= -->
+    <section class="mb-14">
+        <h2 class="text-xl font-semibold text-gray-700 mb-6">Principal Letters</h2>
+
+        <div class="space-y-4">
+            {% for letter in letter_list %}
+            <div class="bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition p-6 flex flex-col md:flex-row md:items-center md:justify-between">
+
+                <div>
+                    <h3 class="font-semibold text-gray-800">
+                        {{ letter.subject }}
+                    </h3>
+                    <p class="text-sm text-gray-500 mt-1">
+                        By {{ letter.name }} • {{ letter.created_at|date:"d M Y" }}
+                    </p>
+                </div>
+
+                <div class="mt-4 md:mt-0 flex gap-2 text-sm">
+                    <a href="{% url 'letter_detail' letter.slug %}"
+                       class="px-3 py-1 bg-gray-100 rounded-md hover:bg-gray-200 transition">
+                        View
+                    </a>
+                    <a href="{% url 'letter_update' letter.slug %}"
+                       class="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                        Edit
+                    </a>
+                    <a href="{% url 'letter_delete' letter.slug %}"
+                       class="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition">
+                        Delete
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="text-center py-8 text-gray-400">
+                No letters available.
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- ================= NOTICE SECTION ================= -->
+    <section>
+        <h2 class="text-xl font-semibold text-gray-700 mb-6">Notices</h2>
+
+        <div class="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden">
+            <table class="w-full text-sm">
+                <thead class="bg-gray-50 text-gray-600 uppercase text-xs tracking-wider">
+                    <tr>
+                        <th class="px-6 py-4 text-left">Title</th>
+                        <th class="px-6 py-4 text-left">Published</th>
+                        <th class="px-6 py-4 text-left">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    {% for notice in notice_list %}
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="px-6 py-4 font-medium text-gray-800">
+                            {{ notice.title }}
+                        </td>
+                        <td class="px-6 py-4 text-gray-500">
+                            {{ notice.published_at|date:"d M Y" }}
+                        </td>
+                        <td class="px-6 py-4 flex gap-2">
+                            <a href="{% url 'notice_detail' notice.slug %}"
+                               class="px-3 py-1 bg-gray-100 rounded-md hover:bg-gray-200 transition">
+                                View
+                            </a>
+                            <a href="{% url 'notice_update' notice.slug %}"
+                               class="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                                Edit
+                            </a>
+                            <a href="{% url 'notice_delete' notice.slug %}"
+                               class="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="px-6 py-6 text-center text-gray-400">
+                            No notices found.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</div>
+
+
+{% endblock %}

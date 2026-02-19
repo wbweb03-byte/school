@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Assignment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen py-10">
+
+<div class="max-w-xl mx-auto">
+
+    <!-- 🔹 PAGE HEADER -->
+    <div class="mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">
+            Teacher Assignment
+        </h1>
+        <p class="text-sm text-gray-600">
+            Assign subject-wise teacher for a class & section
+        </p>
+    </div>
+
+    <!-- 🔹 CARD -->
+    <div class="bg-white p-6 rounded-xl shadow-lg">
+
+        <!-- 🔹 MESSAGES -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="mb-4 p-3 rounded 
+                    {% if message.tags == 'success' %}
+                        bg-green-100 text-green-700
+                    {% else %}
+                        bg-red-100 text-red-700
+                    {% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" id="assignmentForm" class="space-y-5">
+            {% csrf_token %}
+
+            <!-- 🔹 CLASS -->
+            <div>
+                <label class="block text-sm font-medium mb-1">
+                    Class <span class="text-red-500">*</span>
+                </label>
+                {{ form.student_class }}
+                {% if form.student_class.errors %}
+                    <p class="text-red-600 text-sm mt-1">
+                        {{ form.student_class.errors.0 }}
+                    </p>
+                {% endif %}
+            </div>
+
+            <!-- 🔹 SECTION -->
+            <div>
+                <label class="block text-sm font-medium mb-1">
+                    Section <span class="text-red-500">*</span>
+                </label>
+                {{ form.section }}
+                {% if form.section.errors %}
+                    <p class="text-red-600 text-sm mt-1">
+                        {{ form.section.errors.0 }}
+                    </p>
+                {% endif %}
+            </div>
+
+            <!-- 🔹 SUBJECT -->
+            <div>
+                <label class="block text-sm font-medium mb-1">
+                    Subject <span class="text-red-500">*</span>
+                </label>
+                {{ form.subject }}
+                {% if form.subject.errors %}
+                    <p class="text-red-600 text-sm mt-1">
+                        {{ form.subject.errors.0 }}
+                    </p>
+                {% endif %}
+            </div>
+
+            <!-- 🔹 TEACHER -->
+            <div>
+                <label class="block text-sm font-medium mb-1">
+                    Teacher <span class="text-red-500">*</span>
+                </label>
+                {{ form.teacher }}
+                {% if form.teacher.errors %}
+                    <p class="text-red-600 text-sm mt-1">
+                        {{ form.teacher.errors.0 }}
+                    </p>
+                {% endif %}
+            </div>
+
+            <!-- 🔹 NON FIELD ERROR -->
+            {% if form.non_field_errors %}
+                <div class="bg-red-50 text-red-600 p-3 rounded text-sm">
+                    {{ form.non_field_errors.0 }}
+                </div>
+            {% endif %}
+
+            <!-- 🔹 ACTIONS -->
+            <div class="flex justify-end gap-3 pt-4 border-t">
+                <button type="reset"
+                    class="px-4 py-2 rounded border border-gray-300 text-gray-600 hover:bg-gray-50">
+                    Reset
+                </button>
+
+                <button type="submit" id="submitBtn"
+                    class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">
+                    Assign Teacher
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 🔹 UX JAVASCRIPT -->
+<script>
+    const form = document.getElementById("assignmentForm");
+    const submitBtn = document.getElementById("submitBtn");
+
+    form.addEventListener("submit", function () {
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Assigning...";
+    });
+</script>
+
+</body>
+</html>

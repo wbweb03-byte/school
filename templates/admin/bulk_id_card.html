@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Bulk Student ID Cards - A4</title>
+
+<style>
+    @page {
+        size: A4;
+        margin: 12mm;
+    }
+
+    body{
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+        background: #ffffff;
+    }
+
+    /* A4 Grid */
+    .a4-grid{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, auto);
+        gap: 10mm;
+        page-break-after: always;
+    }
+
+    .id-card{
+        width: 100%;
+        height: 220px;
+        border-radius: 14px;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        overflow: hidden;
+        page-break-inside: avoid;
+    }
+
+    /* Header */
+    .header{
+        background: linear-gradient(135deg, #1e40af, #2563eb);
+        color: white;
+        text-align: center;
+        padding: 8px;
+    }
+
+    .school-name{
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .subtitle{
+        font-size: 11px;
+        opacity: 0.9;
+    }
+
+    /* Body */
+    .card-body{
+        display: flex;
+        padding: 8px;
+        gap: 8px;
+    }
+
+    .photo{
+        width: 75px;
+        height: 85px;
+        border-radius: 50%;
+        border: 2px solid #2563eb;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    .photo img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .info{
+        font-size: 11px;
+        color: #1f2933;
+        line-height: 1.4;
+    }
+
+    .info p{
+        margin: 1px 0;
+    }
+
+    .info strong{
+        color: #1e40af;
+    }
+
+    /* Footer */
+    .footer{
+        background: #f8fafc;
+        border-top: 1px solid #e5e7eb;
+        padding: 5px 8px;
+        font-size: 9px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .status{
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 10px;
+        font-size: 9px;
+    }
+
+    .active{
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    .inactive{
+        background: #fee2e2;
+        color: #991b1b;
+    }
+</style>
+</head>
+
+<body>
+
+{% for card in cards %}
+    {% if forloop.first or forloop.counter0|divisibleby:8 %}
+    <div class="a4-grid">
+    {% endif %}
+
+        <div class="id-card">
+
+            <!-- Header -->
+            <div class="header">
+                <div class="school-name">YOUR SCHOOL NAME</div>
+                <div class="subtitle">Student Identity Card</div>
+            </div>
+
+            <!-- Body -->
+            <div class="card-body">
+
+                <div class="photo">
+                    {% if card.student.photo %}
+                        <img src="{{ card.student.photo.url }}">
+                    {% else %}
+                        <img src="https://via.placeholder.com/100">
+                    {% endif %}
+                </div>
+
+                <div class="info">
+                    <p><strong>Name:</strong> {{ card.student.student_name }}</p>
+                    <p><strong>Father:</strong> {{ card.student.father_name }}</p>
+                    <p><strong>Class:</strong> {{ card.student.student_class }}</p>
+                    <p><strong>Section:</strong> {{ card.student.section }}</p>
+                    <p><strong>DOB:</strong> {{ card.student.dob }}</p>
+                    <p><strong>Contact:</strong> {{ card.student.contact_number }}</p>
+                </div>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <div>
+                    Issue: {{ card.issue_date }}<br>
+                    Valid: {{ card.valid_till|default:"N/A" }}
+                </div>
+
+                {% if card.is_active %}
+                    <div class="status active">ACTIVE</div>
+                {% else %}
+                    <div class="status inactive">INACTIVE</div>
+                {% endif %}
+            </div>
+
+        </div>
+
+    {% if forloop.counter|divisibleby:8 or forloop.last %}
+    </div>
+    {% endif %}
+{% endfor %}
+
+</body>
+</html>

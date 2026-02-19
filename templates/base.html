@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}School Management{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+<!-- ================= NAVBAR ================= -->
+<header class="bg-blue-700 text-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+
+        <!-- 🔹 Logo + School Name -->
+         {%for logo in logos%}
+        <div class="flex items-center space-x-3">
+            <img src="{{logo.logo.url}}" alt="School Logo"
+                 class="w-10 h-10 rounded-full bg-white p-1">
+            <h1 class="text-lg md:text-xl font-bold tracking-wide">
+               {{logo.school_name_short}}
+            </h1>
+        </div>
+        {%endfor%}
+
+        <!-- 🔹 Desktop Menu -->
+        <nav class="hidden md:flex space-x-6 text-sm font-medium">
+            <a href="/" class="hover:text-yellow-300 transition duration-300 {% if request.path == '/' %}text-yellow-300 border-b-2 border-yellow-300{% endif %}">
+                Home
+            </a>
+            <a href="{%url 'dashboard'%}" class="hover:text-yellow-300 transition duration-300 {% if 'admin' in request.path %}text-yellow-300 border-b-2 border-yellow-300{% endif %}">
+                Admin
+            </a>
+            <a href="#" class="hover:text-yellow-300 transition duration-300 {% if 'admission' in request.path %}text-yellow-300 border-b-2 border-yellow-300{% endif %}">
+                Admission
+            </a>
+            <a href="{%url 'about_page'%}" class="hover:text-yellow-300 transition duration-300 {% if 'about' in request.path %}text-yellow-300 border-b-2 border-yellow-300{% endif %}">
+                About
+            </a>
+            <a href="/contact/" class="hover:text-yellow-300 transition duration-300 {% if 'contact' in request.path %}text-yellow-300 border-b-2 border-yellow-300{% endif %}">
+                Contact
+            </a>
+        </nav>
+
+        <!-- 🔹 Hamburger Button -->
+        <button id="menu-btn" class="md:hidden focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" 
+                 class="h-6 w-6" fill="none" 
+                 viewBox="0 0 24 24" 
+                 stroke="currentColor">
+                <path stroke-linecap="round" 
+                      stroke-linejoin="round" 
+                      stroke-width="2" 
+                      d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+
+    </div>
+
+    <!-- 🔹 Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-blue-600 px-4 pb-4 space-y-2 text-sm font-medium">
+        <a href="/" class="block hover:bg-blue-800 px-3 py-2 rounded transition">
+            Home
+        </a>
+        <a href="{%url 'dashboard'%}" class="block hover:bg-blue-800 px-3 py-2 rounded transition">
+            Admin
+        </a>
+        <a href="#" class="block hover:bg-blue-800 px-3 py-2 rounded transition">
+            Admission
+        </a>
+        <a href="{%url 'about_page'%}" class="block hover:bg-blue-800 px-3 py-2 rounded transition">
+            About
+        </a>
+        <a href="/contact/" class="block hover:bg-blue-800 px-3 py-2 rounded transition">
+            Contact
+        </a>
+    </div>
+</header>
+
+<!-- ================= CONTENT ================= -->
+<main class="flex-grow">
+    {% block content %}
+    {% endblock %}
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="bg-gray-800 text-white text-center py-4 text-sm">
+    © 2026 Alor Poth Academy | All Rights Reserved
+</footer>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+    const btn = document.getElementById("menu-btn");
+    const menu = document.getElementById("mobile-menu");
+
+    btn.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+    });
+</script>
+
+</body>
+</html>
