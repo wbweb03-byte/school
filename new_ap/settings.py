@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'new_ap.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dbname',
+        'NAME': 'schoolmange',
         'USER': 'schoolmange_user',
         'PASSWORD': 'bC1HVdYefX3F2zCuAxxU6m6vjUpQP62A',
         'HOST': 'dpg-d6c4dpcr85hc73dsp2b0-a',
