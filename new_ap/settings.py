@@ -26,10 +26,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-@=x-ew&732%h5s(57=%s$f!oftl)w1hm(k6#yuc-m_t_*_$p0f'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if "RENDER" in os.environ:
+    DEBUG = False
+else:
+    DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["school-035f.onrender.com",
+    "localhost",
+    "127.0.0.1",
+    ]
 
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://school-035f.onrender.com",
+]
 
 # Application definition
 
@@ -139,7 +149,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 
