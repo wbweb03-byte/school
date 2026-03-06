@@ -44,11 +44,5 @@ urlpatterns = [
     path('logo/edit/<int:id>/', views.logo_update, name='logo_update'),
     path('logo/delete/<int:id>/', views.logo_delete, name='logo_delete'),
    
-]
-
-
-if settings.DEBUG:
-    urlpatterns += static(
-        settings.MEDIA_URL,
-        document_root=settings.MEDIA_ROOT
-    )
+] 
+urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
