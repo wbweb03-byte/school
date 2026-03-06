@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import StudentIdCard, Term, Marksheet, Mark, Subject, TeacherAssignment
 from django.template.loader import render_to_string
-from weasyprint import HTML
+
 from django.contrib import messages
 from django.forms import modelformset_factory
 from .forms import MarksheetForm, MarkForm, TeacherAssignmentForm, SubjectForm
