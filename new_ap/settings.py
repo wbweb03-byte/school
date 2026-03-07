@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 import os
+import cloudinary
 
 
 
@@ -51,6 +52,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary',
+    'cloudinary_storage',
     'blog',
     'info',
     
@@ -151,6 +154,15 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+cloudinary.config(
+    cloud_name = "dlh1brkyp",
+    api_key = "513239555789921",
+    api_secret = "lApF_awGqvyXbfZgaKhvV3mqcdg"
+)
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 
 LOGIN_URL = 'login'      # name of your login url
 LOGIN_REDIRECT_URL = 'dashboard'
