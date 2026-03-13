@@ -32,10 +32,7 @@ if "RENDER" in os.environ:
 else:
     DEBUG = True
 
-ALLOWED_HOSTS = ["school-035f.onrender.com",
-    "localhost",
-    "127.0.0.1",
-    ]
+ALLOWED_HOSTS = ['*']
 
 
 CSRF_TRUSTED_ORIGINS = [
